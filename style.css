@@ -145,7 +145,7 @@ h2 {
 
 /* ==================== О НАС ==================== */
 .about {
-    background: linear-gradient(90deg, #0a1a3a 0%, #070b1f 40%, #070b1f 100%);
+    background: linear-gradient(90deg, #0a1a3a 0%, #000000 35%, #000000 100%);
 }
 .about-grid {
     display: grid;
