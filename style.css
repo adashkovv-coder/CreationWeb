@@ -368,10 +368,10 @@ h2 {
     font-size: 42px;
     animation: glowPulse 4s ease-in-out infinite;
 }
-.final p {
-    font-size: 20px;
-    color: #c5d9f5;
-    margin-top: 16px;
+.final {
+    background: linear-gradient(180deg, #0a1a3a 0%, #070b1f 100%);
+    text-align: center;
+    padding: 120px 0;
 }
 
 /* ==================== ПОДВАЛ ==================== */
