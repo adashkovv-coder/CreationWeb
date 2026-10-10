@@ -29,61 +29,6 @@ document.querySelectorAll('.card').forEach(card => {
     });
 });
 
-// ==================== КАСТОМНЫЙ КУРСОР ====================
-(function () {
-    const cursor = document.getElementById('customCursor');
-    const dot = document.getElementById('customCursorDot');
-    if (!cursor || !dot) return;
-
-    let mouseX = 0, mouseY = 0;
-    let cursorX = 0, cursorY = 0;
-    let dotX = 0, dotY = 0;
-
-    // Отслеживаем позицию мыши
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
-
-    // Плавная анимация курсора
-    function animate() {
-        // Основной круг двигается медленнее (плавно)
-        cursorX += (mouseX - cursorX) * 0.15;
-        cursorY += (mouseY - cursorY) * 0.15;
-
-        // Точка двигается быстрее (почти мгновенно)
-        dotX += (mouseX - dotX) * 0.5;
-        dotY += (mouseY - dotY) * 0.5;
-
-        cursor.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`;
-        dot.style.transform = `translate(${dotX}px, ${dotY}px) translate(-50%, -50%)`;
-
-        requestAnimationFrame(animate);
-    }
-    animate();
-
-    // Реакция на наведение на интерактивные элементы
-    const interactiveSelectors = 'a, button, .card, .nav-links a, .quiz-option, .clear-btn';
-    document.querySelectorAll(interactiveSelectors).forEach(el => {
-        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-    });
-
-    // Реакция на клик
-    document.addEventListener('mousedown', () => cursor.classList.add('click'));
-    document.addEventListener('mouseup', () => cursor.classList.remove('click'));
-
-    // Скрываем курсор при уходе со страницы
-    document.addEventListener('mouseleave', () => {
-        cursor.style.opacity = '0';
-        dot.style.opacity = '0';
-    });
-    document.addEventListener('mouseenter', () => {
-        cursor.style.opacity = '1';
-        dot.style.opacity = '1';
-    });
-})();
-
 // ==================== ТЕСТЫ ====================
 const quizzes = [
     {
@@ -113,4 +58,72 @@ const quizzes = [
             { q: 'Сколько метров достигал мегалодон?', options: ['5-10', '10-15', '15-20', '20-25'], correct: 2 },
             { q: 'Что осталось от мегалодона?', options: ['Скелет', 'Зубы', 'Кожа', 'Ничего'], correct: 1 },
             { q: 'Чем питался мегалодон?', options: ['Рыбой', 'Китами', 'Планктоном', 'Водорослями'], correct: 1 },
-            { q
+            { q: 'Жив ли мегалодон?', options: ['Да', 'Нет', 'Неизвестно', 'Возможно'], correct: 1 },
+        ]
+    },
+    {
+        title: '🌍 Тест про природу',
+        questions: [
+            { q: 'Сколько процентов океана не исследовано?', options: ['20%', '50%', '80%', '95%'], correct: 2 },
+            { q: 'Какое самое большое животное?', options: ['Слон', 'Синий кит', 'Жираф', 'Кальмар'], correct: 1 },
+            { q: 'Сколько деревьев на Земле?', options: ['1 млрд', '100 млрд', '3 трлн', '10 трлн'], correct: 2 },
+            { q: 'Что такое биоразнообразие?', options: ['Разнообразие жизни', 'Разнообразие погоды', 'Разнообразие гор', 'Разнообразие воды'], correct: 0 },
+            { q: 'Сколько лет Земле?', options: ['1 млрд', '2 млрд', '4,5 млрд', '10 млрд'], correct: 2 },
+        ]
+    },
+    {
+        title: '🔬 Тест про науку',
+        questions: [
+            { q: 'Что изучает физика?', options: ['Живую природу', 'Законы природы', 'Химические реакции', 'Космос'], correct: 1 },
+            { q: 'Что такое атом?', options: ['Частица', 'Молекула', 'Клетка', 'Планета'], correct: 0 },
+            { q: 'Что такое ДНК?', options: ['Молекула', 'Клетка', 'Белок', 'Вирус'], correct: 0 },
+            { q: 'Что такое гравитация?', options: ['Сила', 'Энергия', 'Масса', 'Скорость'], correct: 0 },
+            { q: 'Что изучает биология?', options: ['Живую природу', 'Космос', 'Химию', 'Физику'], correct: 0 },
+        ]
+    },
+    {
+        title: '🐋 Тест про китов',
+        questions: [
+            { q: 'Какое самое большое животное?', options: ['Синий кит', 'Слон', 'Жираф', 'Кашалот'], correct: 0 },
+            { q: 'Сколько сердец у кита?', options: ['1', '2', '3', '4'], correct: 0 },
+            { q: 'Как киты общаются?', options: ['Песнями', 'Танцами', 'Криками', 'Молчат'], correct: 0 },
+            { q: 'Что едят синие киты?', options: ['Криль', 'Рыбу', 'Планктон', 'Водоросли'], correct: 0 },
+            { q: 'Сколько живут киты?', options: ['10 лет', '30 лет', '50-100 лет', '200 лет'], correct: 2 },
+        ]
+    }
+];
+
+let currentQuiz = 0;
+let currentQuestion = 0;
+let score = 0;
+
+function startQuiz(index) {
+    currentQuiz = index;
+    currentQuestion = 0;
+    score = 0;
+    document.getElementById('quizModal').classList.add('active');
+    showQuestion();
+}
+
+function showQuestion() {
+    const quiz = quizzes[currentQuiz];
+    const container = document.getElementById('quizContainer');
+
+    if (currentQuestion >= quiz.questions.length) {
+        container.innerHTML = `
+            <h2>${quiz.title}</h2>
+            <div class="quiz-result">
+                🎉 Ты набрал ${score} из ${quiz.questions.length}!<br><br>
+                <button class="quiz-option" onclick="startQuiz(${currentQuiz})">Пройти заново</button>
+            </div>
+        `;
+        return;
+    }
+
+    const q = quiz.questions[currentQuestion];
+    container.innerHTML = `
+        <h2>${quiz.title}</h2>
+        <div class="quiz-question">${currentQuestion + 1}. ${q.q}</div>
+        <div class="quiz-options">
+            ${q.options.map((opt, i) => `
+                <div class="quiz-option" onclick="selectAnswer(${i})">${
