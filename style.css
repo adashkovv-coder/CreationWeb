@@ -27,20 +27,21 @@ body {
     background: linear-gradient(180deg, rgba(7,11,31,0.7) 0%, rgba(7,11,31,0.4) 50%, rgba(7,11,31,0.95) 100%);
 }
 .nav {
-    position: relative; z-index: 2;
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 32px 48px;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 32px;
     animation: fadeDown 1s ease;
 }
 .logo img {
-    height: 48px;
+    height: 42px;
     width: auto;
     display: block;
     transition: transform 0.3s ease;
 }
-.logo img:hover {
-    transform: scale(1.1) rotate(-3deg);
-}
+.logo img:hover { transform: scale(1.1) rotate(-3deg); }
 .nav-links { display: flex; gap: 32px; }
 .nav-links a {
     font-family: 'Inter', sans-serif;
@@ -65,7 +66,8 @@ body {
 .nav-links a:hover::after { width: 100%; }
 
 .hero-content {
-    position: relative; z-index: 2;
+    position: relative;
+    z-index: 2;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -132,7 +134,6 @@ h2 {
     margin-bottom: 48px;
 }
 
-/* Анимация появления при скролле */
 .reveal {
     opacity: 0;
     transform: translateY(60px);
@@ -143,9 +144,9 @@ h2 {
     transform: translateY(0);
 }
 
-/* ==================== О НАС ==================== */
+/* ==================== О НАС — чёрный фон, без градиента ==================== */
 .about {
-    background: linear-gradient(90deg, #0a1a3a 0%, #000000 35%, #000000 100%);
+    background: #000000;
 }
 .about-grid {
     display: grid;
@@ -214,9 +215,7 @@ h2 {
     object-fit: cover;
     transition: transform 0.5s ease;
 }
-.card:hover img {
-    transform: scale(1.08);
-}
+.card:hover img { transform: scale(1.08); }
 .card-info { padding: 24px; }
 .card-info h3 {
     font-size: 20px;
@@ -225,12 +224,8 @@ h2 {
     transition: color 0.3s ease;
 }
 .card:hover .card-info h3 { color: #6aa5ff; }
-.card-info p {
-    font-size: 15px;
-    color: #b2c9e8;
-}
+.card-info p { font-size: 15px; color: #b2c9e8; }
 
-/* ==================== ВИДЕО IFRAME ==================== */
 .card iframe {
     width: 100%;
     height: 180px;
@@ -239,9 +234,7 @@ h2 {
     display: block;
     transition: transform 0.5s ease;
 }
-.card:hover iframe {
-    transform: scale(1.05);
-}
+.card:hover iframe { transform: scale(1.05); }
 
 /* ==================== МОДАЛЬНЫЕ ОКНА ==================== */
 .modal {
@@ -276,10 +269,7 @@ h2 {
     transition: all 0.3s ease;
     line-height: 1;
 }
-.close:hover {
-    transform: rotate(90deg) scale(1.2);
-    color: #6aa5ff;
-}
+.close:hover { transform: rotate(90deg) scale(1.2); color: #6aa5ff; }
 .quiz-content { max-width: 700px; }
 
 @keyframes fadeIn {
@@ -323,10 +313,7 @@ h2 {
     transform: translate(-50%, -50%);
     transition: width 0.4s ease, height 0.4s ease;
 }
-.quiz-option:hover::before {
-    width: 400px;
-    height: 400px;
-}
+.quiz-option:hover::before { width: 400px; height: 400px; }
 .quiz-option:hover {
     background: rgba(106, 165, 255, 0.15);
     border-color: #6aa5ff;
@@ -360,7 +347,7 @@ h2 {
 
 /* ==================== ФИНАЛ ==================== */
 .final {
-    background: linear-gradient(180deg, #070b1f 0%, #0a1a3a 50%, #102a52 100%);
+    background: linear-gradient(180deg, #070b1f 0%, #0a1a3a 50%, #0a1a3a 100%);
     text-align: center;
     padding: 120px 0;
 }
@@ -368,11 +355,7 @@ h2 {
     font-size: 42px;
     animation: glowPulse 4s ease-in-out infinite;
 }
-.final {
-    background: linear-gradient(180deg, #0a1a3a 0%, #070b1f 100%);
-    text-align: center;
-    padding: 120px 0;
-}
+.final p { font-size: 20px; color: #c5d9f5; margin-top: 16px; }
 
 /* ==================== ПОДВАЛ ==================== */
 footer {
@@ -383,19 +366,85 @@ footer {
     font-size: 15px;
     border-top: 1px solid rgba(106, 165, 255, 0.1);
 }
-footer p {
-    transition: color 0.3s ease;
-}
+footer p { transition: color 0.3s ease; }
 footer p:hover { color: #6aa5ff; }
 
-/* ==================== АДАПТИВ ==================== */
+/* ==================== МОБИЛЬНАЯ АДАПТАЦИЯ ==================== */
 @media (max-width: 768px) {
-    .hero-content h1 { font-size: 56px; padding-bottom: 60px; }
-    .hero-content p { font-size: 18px; }
-    .hero-content { padding-bottom: 80px; }
-    .nav { flex-direction: column; gap: 16px; padding: 24px; }
-    .nav-links { gap: 16px; }
-    h2 { font-size: 36px; }
-    .about-grid { grid-template-columns: 1fr; }
-    .final h2 { font-size: 28px; }
+    /* ШАПКА — логотип по центру, меню под ним */
+    .nav {
+        position: relative;
+        display: block;
+        padding: 16px 20px 8px;
+    }
+    .logo {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 12px;
+    }
+    .logo img {
+        height: 32px;
+    }
+    .nav-links {
+        display: flex;
+        justify-content: space-between;
+        gap: 0;
+        width: 100%;
+    }
+    .nav-links a {
+        font-size: 13px;
+        font-weight: 600;
+    }
+    .hero-content {
+        padding-bottom: 60px;
+    }
+    .hero-content h1 {
+        font-size: 64px;
+        letter-spacing: 0.03em;
+    }
+    .hero-content p {
+        font-size: 16px;
+        margin-top: 8px;
+    }
+    .scroll-indicator {
+        font-size: 22px;
+        bottom: 20px;
+    }
+
+    /* СЕКЦИИ */
+    section { padding: 60px 0; }
+    h2 { font-size: 32px; margin-bottom: 28px; }
+
+    /* О НАС */
+    .about { padding: 60px 0; }
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+    .about-image img {
+        max-width: 280px;
+        margin: 0 auto;
+        display: block;
+    }
+    .about-text h2 { text-align: center; }
+    .about-text p { text-align: center; font-size: 16px; }
+
+    /* КАРТОЧКИ */
+    .cards {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .card-info { padding: 18px; }
+    .card-info h3 { font-size: 17px; }
+    .card-info p { font-size: 14px; }
+    .card iframe { height: 200px; }
+    .card img { height: 200px; }
+
+    /* ФИНАЛ */
+    .final { padding: 80px 0; }
+    .final h2 { font-size: 22px; }
+    .final p { font-size: 16px; }
+
+    /* ПОДВАЛ */
+    footer { padding: 24px 0; font-size: 13px; }
 }
