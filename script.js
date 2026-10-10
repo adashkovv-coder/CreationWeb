@@ -126,4 +126,31 @@ function showQuestion() {
         <div class="quiz-question">${currentQuestion + 1}. ${q.q}</div>
         <div class="quiz-options">
             ${q.options.map((opt, i) => `
-                <div class="quiz-option" onclick="selectAnswer(${i})">${
+                <div class="quiz-option" onclick="selectAnswer(${i})">${opt}</div>
+            `).join('')}
+        </div>
+    `;
+}
+
+function selectAnswer(index) {
+    const quiz = quizzes[currentQuiz];
+    const q = quiz.questions[currentQuestion];
+    const options = document.querySelectorAll('.quiz-option');
+
+    options.forEach((opt, i) => {
+        opt.onclick = null;
+        if (i === q.correct) opt.classList.add('correct');
+        else if (i === index) opt.classList.add('wrong');
+    });
+
+    if (index === q.correct) score++;
+
+    setTimeout(() => {
+        currentQuestion++;
+        showQuestion();
+    }, 1200);
+}
+
+function closeQuiz() {
+    document.getElementById('quizModal').classList.remove('active');
+}
