@@ -7,7 +7,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// ==================== АНИМАЦИЯ ПОЯВЛЕНИЯ ПРИ СКРОЛЛЕ ====================
+// ==================== АНИМАЦИЯ ПОЯВЛЕНИЯ ====================
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -18,7 +18,7 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// ==================== КУРСОР — СВЕЧЕНИЕ НА КАРТОЧКАХ ====================
+// ==================== СВЕЧЕНИЕ НА КАРТОЧКАХ ====================
 document.querySelectorAll('.card').forEach(card => {
     card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
@@ -154,3 +154,143 @@ function selectAnswer(index) {
 function closeQuiz() {
     document.getElementById('quizModal').classList.remove('active');
 }
+
+// ==================== СОЗВЕЗДИЕ ====================
+(function () {
+    const canvas = document.getElementById('starsCanvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    let drawing = false;
+    let lastPoint = null;
+    let dpr = window.devicePixelRatio || 1;
+
+    function resizeCanvas() {
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width * dpr;
+        canvas.height = rect.height * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        generateStars();
+    }
+
+    function generateStars() {
+        stars = [];
+        const rect = canvas.getBoundingClientRect();
+        const count = Math.floor((rect.width * rect.height) / 4000);
+        for (let i = 0; i < count; i++) {
+            stars.push({
+                x: Math.random() * rect.width,
+                y: Math.random() * rect.height,
+                r: Math.random() * 1.5 + 0.3,
+                twinkle: Math.random() * Math.PI * 2,
+                speed: Math.random() * 0.02 + 0.005
+            });
+        }
+    }
+
+    function drawStars() {
+        const rect = canvas.getBoundingClientRect();
+        ctx.clearRect(0, 0, rect.width, rect.height);
+
+        const grad = ctx.createRadialGradient(
+            rect.width / 2, rect.height / 2, 0,
+            rect.width / 2, rect.height / 2, rect.width
+        );
+        grad.addColorStop(0, '#0a1a3a');
+        grad.addColorStop(1, '#000000');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, rect.width, rect.height);
+
+        stars.forEach(s => {
+            s.twinkle += s.speed;
+            const alpha = 0.5 + Math.sin(s.twinkle) * 0.5;
+            ctx.beginPath();
+            ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(200, 220, 255, ' + alpha + ')';
+            ctx.shadowColor = 'rgba(106, 165, 255, ' + alpha + ')';
+            ctx.shadowBlur = 8;
+            ctx.fill();
+        });
+        ctx.shadowBlur = 0;
+    }
+
+    function drawLine(from, to) {
+        ctx.beginPath();
+        ctx.moveTo(from.x, from.y);
+        ctx.lineTo(to.x, to.y);
+        ctx.strokeStyle = 'rgba(150, 200, 255, 0.9)';
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+        ctx.shadowColor = 'rgba(106, 165, 255, 1)';
+        ctx.shadowBlur = 15;
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        ctx.beginPath();
+        ctx.arc(to.x, to.y, 3, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(220, 235, 255, 1)';
+        ctx.shadowColor = 'rgba(106, 165, 255, 1)';
+        ctx.shadowBlur = 20;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+    }
+
+    function animate() {
+        drawStars();
+        requestAnimationFrame(animate);
+    }
+
+    function getPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        return {
+            x: clientX - rect.left,
+            y: clientY - rect.top
+        };
+    }
+
+    function startDraw(e) {
+        e.preventDefault();
+        drawing = true;
+        lastPoint = getPos(e);
+    }
+
+    function drawMove(e) {
+        if (!drawing) return;
+        e.preventDefault();
+        const pos = getPos(e);
+        if (lastPoint) drawLine(lastPoint, pos);
+        lastPoint = pos;
+    }
+
+    function endDraw(e) {
+        e.preventDefault();
+        drawing = false;
+        lastPoint = null;
+    }
+
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', drawMove);
+    canvas.addEventListener('mouseup', endDraw);
+    canvas.addEventListener('mouseleave', endDraw);
+
+    canvas.addEventListener('touchstart', startDraw, { passive: false });
+    canvas.addEventListener('touchmove', drawMove, { passive: false });
+    canvas.addEventListener('touchend', endDraw, { passive: false });
+    canvas.addEventListener('touchcancel', endDraw, { passive: false });
+
+    window.clearCanvas = function () {
+        const rect = canvas.getBoundingClientRect();
+        ctx.clearRect(0, 0, rect.width, rect.height);
+        // Перерисовываем фон и звёзды
+        drawStars();
+    };
+
+    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('load', () => {
+        resizeCanvas();
+        animate();
+    });
+})();
