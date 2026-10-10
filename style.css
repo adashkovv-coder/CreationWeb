@@ -8,6 +8,49 @@ body {
     color: #e0ecff;
     line-height: 1.6;
     overflow-x: hidden;
+    cursor: none;
+}
+
+/* ==================== КАСТОМНЫЙ КУРСОР ==================== */
+.custom-cursor {
+    position: fixed;
+    width: 32px;
+    height: 32px;
+    border: 1.5px solid rgba(106, 165, 255, 0.8);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    box-shadow: 0 0 20px rgba(106, 165, 255, 0.4);
+    mix-blend-mode: screen;
+}
+.custom-cursor-dot {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    background: #6aa5ff;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 12px rgba(106, 165, 255, 1);
+}
+.custom-cursor.hover {
+    width: 56px;
+    height: 56px;
+    background: rgba(106, 165, 255, 0.1);
+    border-color: #6aa5ff;
+}
+.custom-cursor.click {
+    width: 20px;
+    height: 20px;
+    background: rgba(106, 165, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+    body { cursor: auto; }
+    .custom-cursor, .custom-cursor-dot { display: none; }
 }
 
 .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
@@ -145,9 +188,7 @@ h2 {
 }
 
 /* ==================== О НАС ==================== */
-.about {
-    background: #000000;
-}
+.about { background: #000000; }
 .about-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -345,61 +386,6 @@ h2 {
     75% { transform: translateX(10px); }
 }
 
-/* ==================== СОЗВЕЗДИЕ ==================== */
-.constellation {
-    background: #000000;
-    padding: 100px 0;
-    text-align: center;
-}
-.constellation-subtitle {
-    font-size: 18px;
-    color: #c5d9f5;
-    margin-bottom: 40px;
-    margin-top: -30px;
-}
-.canvas-wrapper {
-    position: relative;
-    max-width: 900px;
-    margin: 0 auto;
-    border-radius: 27px;
-    overflow: hidden;
-    border: 1px solid rgba(106, 165, 255, 0.15);
-    box-shadow: 0 30px 80px rgba(106, 165, 255, 0.1);
-    background: #000000;
-}
-#starsCanvas {
-    display: block;
-    width: 100%;
-    height: 500px;
-    cursor: crosshair;
-    touch-action: none;
-    user-select: none;
-    -webkit-user-select: none;
-    -webkit-tap-highlight-color: transparent;
-}
-.clear-btn {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    padding: 10px 20px;
-    background: rgba(106, 165, 255, 0.15);
-    border: 1px solid rgba(106, 165, 255, 0.3);
-    border-radius: 40px;
-    color: #e0ecff;
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(8px);
-    z-index: 10;
-}
-.clear-btn:hover {
-    background: rgba(106, 165, 255, 0.3);
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(106, 165, 255, 0.4);
-}
-
 /* ==================== ФИНАЛ ==================== */
 .final {
     background: linear-gradient(180deg, #070b1f 0%, #0a1a3a 50%, #0a1a3a 100%);
@@ -501,16 +487,6 @@ footer p:hover { color: #6aa5ff; }
     .card-info p { font-size: 13px; }
     .card iframe { height: 200px; }
     .card img { height: 200px; }
-
-    .constellation { padding: 60px 0; }
-    .constellation-subtitle { font-size: 15px; margin-bottom: 24px; }
-    #starsCanvas { height: 350px; }
-    .clear-btn {
-        padding: 8px 16px;
-        font-size: 12px;
-        top: 12px;
-        right: 12px;
-    }
 
     .final { padding: 70px 0; }
     .final h2 { font-size: 20px; }
