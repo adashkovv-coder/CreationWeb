@@ -144,7 +144,7 @@ h2 {
     transform: translateY(0);
 }
 
-/* ==================== О НАС — чёрный фон, без градиента ==================== */
+/* ==================== О НАС ==================== */
 .about {
     background: #000000;
 }
@@ -371,49 +371,57 @@ footer p:hover { color: #6aa5ff; }
 
 /* ==================== МОБИЛЬНАЯ АДАПТАЦИЯ ==================== */
 @media (max-width: 768px) {
-    /* ШАПКА — логотип по центру, меню под ним */
+    /* ШАПКА — лого слева, меню справа в одну строку */
     .nav {
         position: relative;
-        display: block;
-        padding: 16px 20px 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 16px 16px 8px;
+        gap: 8px;
+        flex-wrap: nowrap;
     }
     .logo {
         display: flex;
-        justify-content: center;
-        margin-bottom: 12px;
+        align-items: center;
+        flex-shrink: 0;
     }
     .logo img {
-        height: 32px;
+        height: 28px;
+        width: auto;
     }
     .nav-links {
         display: flex;
-        justify-content: space-between;
-        gap: 0;
-        width: 100%;
+        gap: 12px;
+        flex-shrink: 1;
+        overflow: hidden;
     }
     .nav-links a {
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 600;
+        white-space: nowrap;
     }
     .hero-content {
-        padding-bottom: 60px;
+        padding: 40px 16px 100px;
     }
     .hero-content h1 {
-        font-size: 64px;
-        letter-spacing: 0.03em;
+        font-size: 48px;
+        letter-spacing: 0.02em;
+        line-height: 1.1;
     }
     .hero-content p {
-        font-size: 16px;
-        margin-top: 8px;
+        font-size: 14px;
+        margin-top: 10px;
+        line-height: 1.4;
     }
     .scroll-indicator {
-        font-size: 22px;
+        font-size: 20px;
         bottom: 20px;
     }
 
     /* СЕКЦИИ */
     section { padding: 60px 0; }
-    h2 { font-size: 32px; margin-bottom: 28px; }
+    h2 { font-size: 28px; margin-bottom: 24px; }
 
     /* О НАС */
     .about { padding: 60px 0; }
@@ -422,28 +430,31 @@ footer p:hover { color: #6aa5ff; }
         gap: 32px;
     }
     .about-image img {
-        max-width: 280px;
+        max-width: 240px;
         margin: 0 auto;
         display: block;
     }
     .about-text h2 { text-align: center; }
-    .about-text p { text-align: center; font-size: 16px; }
+    .about-text p {
+        text-align: center;
+        font-size: 15px;
+    }
 
     /* КАРТОЧКИ */
     .cards {
         grid-template-columns: 1fr;
         gap: 20px;
     }
-    .card-info { padding: 18px; }
-    .card-info h3 { font-size: 17px; }
-    .card-info p { font-size: 14px; }
+    .card-info { padding: 16px; }
+    .card-info h3 { font-size: 16px; }
+    .card-info p { font-size: 13px; }
     .card iframe { height: 200px; }
     .card img { height: 200px; }
 
     /* ФИНАЛ */
-    .final { padding: 80px 0; }
-    .final h2 { font-size: 22px; }
-    .final p { font-size: 16px; }
+    .final { padding: 70px 0; }
+    .final h2 { font-size: 20px; }
+    .final p { font-size: 15px; }
 
     /* ПОДВАЛ */
     footer { padding: 24px 0; font-size: 13px; }
