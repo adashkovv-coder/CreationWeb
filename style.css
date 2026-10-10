@@ -365,7 +365,7 @@ h2 {
     overflow: hidden;
     border: 1px solid rgba(106, 165, 255, 0.15);
     box-shadow: 0 30px 80px rgba(106, 165, 255, 0.1);
-    background: radial-gradient(circle at 50% 50%, #0a1a3a 0%, #000000 70%);
+    background: #000000;
 }
 #starsCanvas {
     display: block;
@@ -373,6 +373,9 @@ h2 {
     height: 500px;
     cursor: crosshair;
     touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 .clear-btn {
     position: absolute;
@@ -423,7 +426,6 @@ footer p:hover { color: #6aa5ff; }
 
 /* ==================== МОБИЛЬНАЯ АДАПТАЦИЯ ==================== */
 @media (max-width: 768px) {
-    /* ШАПКА — лого слева, меню справа в одну строку */
     .nav {
         position: relative;
         display: flex;
@@ -471,11 +473,9 @@ footer p:hover { color: #6aa5ff; }
         bottom: 20px;
     }
 
-    /* СЕКЦИИ */
     section { padding: 60px 0; }
     h2 { font-size: 28px; margin-bottom: 24px; }
 
-    /* О НАС */
     .about { padding: 60px 0; }
     .about-grid {
         grid-template-columns: 1fr;
@@ -492,7 +492,6 @@ footer p:hover { color: #6aa5ff; }
         font-size: 15px;
     }
 
-    /* КАРТОЧКИ */
     .cards {
         grid-template-columns: 1fr;
         gap: 20px;
@@ -503,7 +502,6 @@ footer p:hover { color: #6aa5ff; }
     .card iframe { height: 200px; }
     .card img { height: 200px; }
 
-    /* СОЗВЕЗДИЕ */
     .constellation { padding: 60px 0; }
     .constellation-subtitle { font-size: 15px; margin-bottom: 24px; }
     #starsCanvas { height: 350px; }
@@ -514,11 +512,9 @@ footer p:hover { color: #6aa5ff; }
         right: 12px;
     }
 
-    /* ФИНАЛ */
     .final { padding: 70px 0; }
     .final h2 { font-size: 20px; }
     .final p { font-size: 15px; }
 
-    /* ПОДВАЛ */
     footer { padding: 24px 0; font-size: 13px; }
 }
