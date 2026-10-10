@@ -7,16 +7,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// ВИДЕО
-function openVideo(url) {
-    document.getElementById('videoFrame').src = url;
-    document.getElementById('videoModal').classList.add('active');
-}
-function closeVideo() {
-    document.getElementById('videoFrame').src = '';
-    document.getElementById('videoModal').classList.remove('active');
-}
-
 // ТЕСТЫ
 const quizzes = [
     {
