@@ -29,6 +29,61 @@ document.querySelectorAll('.card').forEach(card => {
     });
 });
 
+// ==================== КАСТОМНЫЙ КУРСОР ====================
+(function () {
+    const cursor = document.getElementById('customCursor');
+    const dot = document.getElementById('customCursorDot');
+    if (!cursor || !dot) return;
+
+    let mouseX = 0, mouseY = 0;
+    let cursorX = 0, cursorY = 0;
+    let dotX = 0, dotY = 0;
+
+    // Отслеживаем позицию мыши
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    // Плавная анимация курсора
+    function animate() {
+        // Основной круг двигается медленнее (плавно)
+        cursorX += (mouseX - cursorX) * 0.15;
+        cursorY += (mouseY - cursorY) * 0.15;
+
+        // Точка двигается быстрее (почти мгновенно)
+        dotX += (mouseX - dotX) * 0.5;
+        dotY += (mouseY - dotY) * 0.5;
+
+        cursor.style.transform = `translate(${cursorX}px, ${cursorY}px) translate(-50%, -50%)`;
+        dot.style.transform = `translate(${dotX}px, ${dotY}px) translate(-50%, -50%)`;
+
+        requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Реакция на наведение на интерактивные элементы
+    const interactiveSelectors = 'a, button, .card, .nav-links a, .quiz-option, .clear-btn';
+    document.querySelectorAll(interactiveSelectors).forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    });
+
+    // Реакция на клик
+    document.addEventListener('mousedown', () => cursor.classList.add('click'));
+    document.addEventListener('mouseup', () => cursor.classList.remove('click'));
+
+    // Скрываем курсор при уходе со страницы
+    document.addEventListener('mouseleave', () => {
+        cursor.style.opacity = '0';
+        dot.style.opacity = '0';
+    });
+    document.addEventListener('mouseenter', () => {
+        cursor.style.opacity = '1';
+        dot.style.opacity = '1';
+    });
+})();
+
 // ==================== ТЕСТЫ ====================
 const quizzes = [
     {
@@ -58,20 +113,4 @@ const quizzes = [
             { q: 'Сколько метров достигал мегалодон?', options: ['5-10', '10-15', '15-20', '20-25'], correct: 2 },
             { q: 'Что осталось от мегалодона?', options: ['Скелет', 'Зубы', 'Кожа', 'Ничего'], correct: 1 },
             { q: 'Чем питался мегалодон?', options: ['Рыбой', 'Китами', 'Планктоном', 'Водорослями'], correct: 1 },
-            { q: 'Жив ли мегалодон?', options: ['Да', 'Нет', 'Неизвестно', 'Возможно'], correct: 1 },
-        ]
-    },
-    {
-        title: '🌍 Тест про природу',
-        questions: [
-            { q: 'Сколько процентов океана не исследовано?', options: ['20%', '50%', '80%', '95%'], correct: 2 },
-            { q: 'Какое самое большое животное?', options: ['Слон', 'Синий кит', 'Жираф', 'Кальмар'], correct: 1 },
-            { q: 'Сколько деревьев на Земле?', options: ['1 млрд', '100 млрд', '3 трлн', '10 трлн'], correct: 2 },
-            { q: 'Что такое биоразнообразие?', options: ['Разнообразие жизни', 'Разнообразие погоды', 'Разнообразие гор', 'Разнообразие воды'], correct: 0 },
-            { q: 'Сколько лет Земле?', options: ['1 млрд', '2 млрд', '4,5 млрд', '10 млрд'], correct: 2 },
-        ]
-    },
-    {
-        title: '🔬 Тест про науку',
-        questions: [
-            { q: 'Что изучает физика?', options: ['Живую природу', 'Законы природы', 'Химические реакции', 'Космос'], correct: 1
+            { q
